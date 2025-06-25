@@ -5,3 +5,13 @@
 .error {
   color: red;
 }
+
+.bookCard{
+    background-color: white;
+    border-style: groove;
+    border-color: green;
+    width: 150px;
+    border-radius: 15px;
+    text-align: center;
+    display: inline-block;
+}

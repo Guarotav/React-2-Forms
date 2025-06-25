@@ -13,49 +13,55 @@ import "./style.css";
  * - isFavorite (boolean, default false)
  */
 
-const AddBook = () => {
-  const [title, setTitle] = useState("");
+const AddBook = ({ books, setBooks }) => {
   const [formData, setFormData] = useState({
-    title: ``,
-    author: ``,
-    publishedDate: ``,
+    title: "",
+    author: "",
+    genre: "",
     rating: 1,
   });
 
   const [titleErrors, setTitleErrors] = useState([]);
   const [dirty, setDirty] = useState(false);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("title", title);
-    appendBook(title);
-    clearForm();
-  };
-
-  const appendBook = (newBookTitle, author, rating) => {
-    const newBook = {
-      id: books.length + 1,
-      title: newBookTitle,
-      author: author,
-      rating: rating
-    };
-    setBooks([...books, newBook]);
-  };
-
-  const handleTitleChange = (event) => {
+  const handleChange = (e) => {
     setDirty(true);
-    // Let's make sure the title has at least 4 characters in it
-    setTitle(event.target.value);
-    if (title.length < 4) {
-      setTitleErrors(["title must have at least 4 characters"]);
+    const { name, value } = e.target;
+
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+
+    if (name === "title" && value.length < 4) {
+      setTitleErrors(["Title must have at least 4 characters"]);
     } else {
       setTitleErrors([]);
     }
   };
 
-  const clearForm = () => {
-    setTitle("");
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const newBook = {
+      id: books.length + 1,
+      ...formData,
+      rating: Number(formData.rating),
+    };
+
+    setBooks([...books, newBook]);
+
+    setFormData({
+      title: "",
+      author: "",
+      genre: "",
+      rating: 1,
+    });
+
+    setTitleErrors([]);
+    setDirty(false);
   };
+
   return (
     <form onSubmit={handleSubmit} className="new-book-form">
       <input
@@ -63,8 +69,33 @@ const AddBook = () => {
         type="text"
         required
         placeholder="Title"
-        value={title}
-        onChange={handleTitleChange}
+        value={formData.title}
+        onChange={handleChange}
+      />
+      <input
+        name="author"
+        type="text"
+        required
+        placeholder="Author"
+        value={formData.author}
+        onChange={handleChange}
+      />
+      <select name="genre" value={formData.genre} onChange={handleChange}>
+        <option value="">Select Genre</option>
+        <option value="Fiction">Fiction</option>
+        <option value="Non Fiction">Non Fiction</option>
+        <option value="Horror">Horror</option>
+        <option value="Sci Fi">Sci Fi</option>
+        <option value="Sports">Sports</option>
+      </select>
+      <input
+        name="rating"
+        type="number"
+        min="1"
+        max="5"
+        placeholder="Enter a rating from 1 to 5"
+        value={formData.rating}
+        onChange={handleChange}
       />
       {titleErrors.map((error) => (
         <p className="error" key={error}>
