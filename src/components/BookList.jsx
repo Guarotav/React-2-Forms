@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import BookCard from "./BookCard";
 
 const BookList = () => {
   const initialBooksState = [
@@ -19,8 +20,10 @@ const BookList = () => {
 
   return (
     <div>
+      <BookCard title={books.title} author={books.author} genre={books.genre} rating={books.rating} />
       {books.map((book) => (
-        <li key={book.id}>{book.title}</li>
+              <BookCard title={book.title} author={book.author} genre={book.genre} rating={book.rating} />
+
       ))}
     </div>
   );

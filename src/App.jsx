@@ -22,7 +22,10 @@ const App = () => {
   return (
     <div className="app">
       <h1 className="title">Book Review App 📝</h1>
-      <select>
+      <label for="genre">Select Genre</label>
+      <select className="genre" name = "genre" >
+        {/* <option value="" disabled selected>Select your option</option> */}
+      {/* <select placeholder="Title" type="text" value="" name="title"> */}
         <option>Fiction</option>
         <option>Horror</option>
         <option>Non Fiction</option>
