@@ -102,7 +102,7 @@ const AddBook = ({ books, setBooks }) => {
           {error}
         </p>
       ))}
-      <button disabled={titleErrors.length > 0 || !dirty}>Create Book</button>
+      <button disabled={titleErrors.length > 0 || !dirty}>Add Book</button>
     </form>
   );
 };
