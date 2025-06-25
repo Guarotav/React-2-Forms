@@ -1,0 +1,7 @@
+.new-book-form * {
+  color: #000000;
+}
+
+.error {
+  color: red;
+}
