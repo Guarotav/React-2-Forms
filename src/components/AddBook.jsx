@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./style.css";
+import BookCard from "./BookCard";
+import BookList from "./BookList"
 /**
  * A book should have the following fields:
  * - title (required)
@@ -19,10 +21,13 @@ const AddBook = ({ books, setBooks }) => {
     author: "",
     genre: "",
     rating: 1,
+    isRead: false,
+    isFavorite: false,
   });
 
   const [titleErrors, setTitleErrors] = useState([]);
   const [dirty, setDirty] = useState(false);
+  const [authorErrors, setAuthorErrors] = useState([]);
 
   const handleChange = (e) => {
     setDirty(true);
@@ -38,6 +43,11 @@ const AddBook = ({ books, setBooks }) => {
     } else {
       setTitleErrors([]);
     }
+    if (name === "author" && value.length < 2) {
+      setAuthorErrors(["Author must have at least 2 characters"]);
+    } else {
+      setAuthorErrors([]);
+    }
   };
 
   const handleSubmit = (event) => {
@@ -47,6 +57,8 @@ const AddBook = ({ books, setBooks }) => {
       id: books.length + 1,
       ...formData,
       rating: Number(formData.rating),
+      isRead: Boolean(formData.isRead),
+      isFavorite: Boolean(formData.isFavorite),
     };
 
     setBooks([...books, newBook]);
@@ -63,47 +75,79 @@ const AddBook = ({ books, setBooks }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="new-book-form">
-      <input
-        name="title"
-        type="text"
-        required
-        placeholder="Title"
-        value={formData.title}
-        onChange={handleChange}
-      />
-      <input
-        name="author"
-        type="text"
-        required
-        placeholder="Author"
-        value={formData.author}
-        onChange={handleChange}
-      />
-      <select name="genre" value={formData.genre} onChange={handleChange}>
-        <option value="">Select Genre</option>
-        <option value="Fiction">Fiction</option>
-        <option value="Non Fiction">Non Fiction</option>
-        <option value="Horror">Horror</option>
-        <option value="Sci Fi">Sci Fi</option>
-        <option value="Sports">Sports</option>
-      </select>
-      <input
-        name="rating"
-        type="number"
-        min="1"
-        max="5"
-        placeholder="Enter a rating from 1 to 5"
-        value={formData.rating}
-        onChange={handleChange}
-      />
-      {titleErrors.map((error) => (
-        <p className="error" key={error}>
-          {error}
-        </p>
-      ))}
-      <button disabled={titleErrors.length > 0 || !dirty}>Add Book</button>
-    </form>
+    <div className="new-book-form">
+      <form onSubmit={handleSubmit}>
+        <div>
+          <input
+            name="title"
+            type="text"
+            required
+            placeholder="Title"
+            value={formData.title}
+            onChange={handleChange}
+          />
+          <input
+            name="author"
+            type="text"
+            required
+            placeholder="Author"
+            value={formData.author}
+            onChange={handleChange}
+          />
+          <select name="genre" value={formData.genre} onChange={handleChange}>
+            <option value="">Select Genre</option>
+            <option value="Fiction">Fiction</option>
+            <option value="Non Fiction">Non Fiction</option>
+            <option value="Horror">Horror</option>
+            <option value="Sci Fi">Sci Fi</option>
+            <option value="Sports">Sports</option>
+          </select>
+          <input
+            name="rating"
+            type="number"
+            min="1"
+            max="5"
+            placeholder="Enter a rating from 1 to 5"
+            value={formData.rating}
+            onChange={handleChange}
+          />
+          <label id="isRead" htmlFor="isRead">
+            Read
+          </label>
+          <input
+            name="isRead"
+            type="checkbox"
+            checked={formData.isRead}
+            onChange={(e) =>
+              setFormData({ ...formData, isRead: e.target.checked })
+            }
+          />
+          <label id="isFavorite" htmlFor="isFavorite">
+            Favorite
+          </label>
+          <input
+            name="isFavorite"
+            type="checkbox"
+            checked={formData.isFavorite}
+            onChange={(e) =>
+              setFormData({ ...formData, isFavorite: e.target.checked })
+            }
+          />
+          <button disabled={titleErrors.length > 0 || !dirty}>Add Book</button>
+        </div>
+
+        {titleErrors.map((error) => (
+          <p className="error" key={error}>
+            {error}
+          </p>
+        ))}
+        {authorErrors.map((error) => (
+          <p className="error" key={error}>
+            {error}
+          </p>
+        ))}
+      </form>
+    </div>
   );
 };
 
