@@ -10,6 +10,8 @@ const BookList = () => {
       author: `HarperLee`,
       genre: `fiction`,
       rating: 5,
+      isRead: true,
+      isFavorite: false,
     },
     {
       id: 2,
@@ -17,6 +19,8 @@ const BookList = () => {
       author: `George Orwell`,
       genre: `fiction`,
       rating: 4,
+      isRead: true,
+      isFavorite: false,
     },
     {
       id: 3,
@@ -24,6 +28,8 @@ const BookList = () => {
       author: `F. Scott Fitzgerald`,
       genre: `non-fiction`,
       rating: 4,
+      isRead: false,
+      isFavorite: true,
     },
     {
       id: 4,
@@ -31,6 +37,8 @@ const BookList = () => {
       author: `J.R.R. Tolkien`,
       genre: `fantasy`,
       rating: 5,
+      isRead: true,
+      isFavorite: true,
     },
   ];
 
@@ -39,7 +47,7 @@ const BookList = () => {
   return (
     <div>
       <AddBook books={books} setBooks={setBooks} />
-      
+
       {books.map((book) => (
         <BookCard
           key={book.id}
@@ -47,6 +55,8 @@ const BookList = () => {
           author={book.author}
           genre={book.genre}
           rating={book.rating}
+          isRead={book.isRead}
+          isFavorite={book.isFavorite}
         />
       ))}
     </div>

@@ -1,13 +1,15 @@
 .new-book-form * {
   color: #000000;
   display: flex;
+  justify-content: center;
   flex-direction: row;     
   align-items: center;      
-  gap: 12px;     
+  gap: 5px;     
 }
 
 .error {
   color: red;
+  font-size: medium;
 }
 
 .bookCard{
@@ -15,11 +17,21 @@
     border-style: groove;
     border-color: green;
     width: 45%;
-    height: 100px;
+    height: 150px;
     border-radius: 15px;
     text-align: center;
     display: inline-block;
     vertical-align: top;
     margin: 2%;
     box-sizing: border-box;
+}
+
+#isRead{
+    color: white;
+
+}
+
+#isFavorite{
+    color: white;
+
 }
